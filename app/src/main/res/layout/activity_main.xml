@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/plateado"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="404dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="108dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Calculadora Básica"
+        android:textAlignment="center"
+        android:textColor="#C71313"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/most_resultado"
+        android:layout_width="359dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="16dp"
+        android:background="#f5ffd2"
+        android:gravity="end|center_vertical"
+        android:padding="8dp"
+
+        android:textSize="36sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <GridLayout
+        android:layout_width="360dp"
+
+        android:layout_height="350dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#f5ffd2"
+        android:columnCount="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/most_resultado"
+        app:layout_constraintVertical_bias="0.529">
+
+        <Button
+            android:id="@+id/n7"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="7"
+            android:textColor="@color/black" />
+
+
+        <Button
+            android:id="@+id/n8"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="8"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/n9"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="9"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/div"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/cian"
+            android:text="/"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/n4"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="4"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/n5"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="5"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/n6"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="6"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/mult"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/cian"
+            android:text="*"
+            android:textColor="@color/black"
+            android:textColorLink="#D6CFCA" />
+
+        <Button
+            android:id="@+id/n1"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="1"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/n2"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="2"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/n3"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="3"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/rest"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/cian"
+            android:text="-"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/n0"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/white"
+            android:text="0"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/DEL"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/rojo"
+            android:text="DEL"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/igu"
+            android:layout_height="70dp"
+            android:width="22dp"
+            android:backgroundTint="@color/white"
+            android:color="@color/verde"
+            android:text="="
+            android:textColor="@color/black"
+
+            />
+
+
+        <Button
+            android:id="@+id/sum"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/cian"
+            android:text="+"
+            android:textColor="@color/black" />
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
