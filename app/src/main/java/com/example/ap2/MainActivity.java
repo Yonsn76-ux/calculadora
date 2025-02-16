@@ -3,6 +3,10 @@ package com.example.ap2;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,26 +16,38 @@ public class MainActivity extends AppCompatActivity {
     private StringBuilder currentInput;
     private double firstOperand;
     private String operator;
+    private boolean isNewNumber;
+    private boolean hasResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // pal barra de tareas sea tranparente
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+
         mostResultado = findViewById(R.id.most_resultado);
         currentInput = new StringBuilder();
+        isNewNumber = true;
+        hasResult = false;
 
-        // Configurar listeners para botones numéricos
+        //  para botones numéricos
         setNumberButtonListeners();
 
-        // Configurar listeners para botones de operación
+        //  para botones de operación
         setOperationButtonListeners();
 
-        // Configurar listener para el botón igual
+        //  para el botón igual
         Button btnIgual = findViewById(R.id.igu);
         btnIgual.setOnClickListener(v -> calculateResult());
 
-        // Configurar listener para el botón DEL
+        //  para el botón DEL
         Button btnDel = findViewById(R.id.DEL);
         btnDel.setOnClickListener(v -> deleteLastChar());
     }
@@ -52,24 +68,50 @@ public class MainActivity extends AppCompatActivity {
 
     private void onNumberClick(View view) {
         Button button = (Button) view;
+        if (isNewNumber) {
+            currentInput.setLength(0);
+            isNewNumber = false;
+        }
+        if (hasResult) {
+            currentInput.setLength(0);
+            operator = null;
+            firstOperand = 0;
+            hasResult = false;
+        }
         currentInput.append(button.getText());
-        updateDisplay();
+        mostResultado.setText(currentInput.toString());
     }
 
     private void onOperationClick(View view) {
         Button button = (Button) view;
+        String newOperator = button.getText().toString();
+
         if (currentInput.length() > 0) {
-            firstOperand = Double.parseDouble(currentInput.toString());
-            operator = button.getText().toString();
-            currentInput.setLength(0);
-            updateDisplay();
+            if (operator != null && !isNewNumber) {
+                calculateResult();
+            } else {
+                firstOperand = Double.parseDouble(currentInput.toString());
+            }
+            operator = newOperator;
+            isNewNumber = true;
+            hasResult = false;
+            mostResultado.setText(formatNumber(firstOperand) + " " + operator);
+        } else if (operator != null) {
+            // para cambiar operador si no hay nuevo número
+            operator = newOperator;
+            mostResultado.setText(formatNumber(firstOperand) + " " + operator);
+        } else if (firstOperand != 0 || hasResult) {
+            operator = newOperator;
+            mostResultado.setText(formatNumber(firstOperand) + " " + operator);
         }
     }
 
     private void calculateResult() {
-        if (currentInput.length() > 0 && operator != null) {
+        if (operator != null && currentInput.length() > 0 && !isNewNumber) {
             double secondOperand = Double.parseDouble(currentInput.toString());
             double result = 0;
+            boolean validOperation = true;
+
             switch (operator) {
                 case "+":
                     result = firstOperand + secondOperand;
@@ -85,25 +127,40 @@ public class MainActivity extends AppCompatActivity {
                         result = firstOperand / secondOperand;
                     } else {
                         mostResultado.setText("Error");
-                        return;
+                        validOperation = false;
+                        currentInput.setLength(0);
+                        operator = null;
+                        firstOperand = 0;
+                        isNewNumber = true;
                     }
                     break;
             }
-            currentInput.setLength(0);
-            currentInput.append(result);
-            updateDisplay();
-            operator = null;
+
+            if (validOperation) {
+                firstOperand = result;
+                currentInput.setLength(0);
+                currentInput.append(formatNumber(result));
+                mostResultado.setText(formatNumber(result));
+                isNewNumber = true;
+                hasResult = true;
+            }
         }
     }
 
     private void deleteLastChar() {
-        if (currentInput.length() > 0) {
-            currentInput.deleteCharAt(currentInput.length() - 1);
-            updateDisplay();
-        }
+        currentInput.setLength(0);
+        operator = null;
+        firstOperand = 0;
+        mostResultado.setText("0");
+        isNewNumber = true;
+        hasResult = false;
     }
 
-    private void updateDisplay() {
-        mostResultado.setText(currentInput.toString());
+    private String formatNumber(double number) {
+        if (number == (long) number) {
+            return String.format("%d", (long) number);
+        } else {
+            return String.format("%.2f", number);
+        }
     }
 }
